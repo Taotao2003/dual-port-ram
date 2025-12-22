@@ -6,8 +6,7 @@ module ram_tb;
   import uvm_pkg::*;
   import ram_pkg::*;
   
- 
-  
+
   logic clk, rst;
   initial begin
     clk = 0;

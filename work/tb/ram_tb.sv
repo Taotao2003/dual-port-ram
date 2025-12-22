@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-module dp_ram_tb();
+module ram_tb();
 
 localparam DATA_WIDTH = 8;
 localparam ADDR_WIDTH = 4;
