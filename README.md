@@ -15,18 +15,18 @@ This is a WRITE THROUGH design with PORT B PRECEDENCE
 ## Different Scenarios
 
 if A and B reads:
-    Diff addr ==> A gets mem[addrA]; B gets mem[addrB]
-    Same addr ==> A gets mem[addr_]; B gets mem[addr_]
+    Diff addr ==> A gets mem[addrA]; B gets mem[addrB]<br>
+    Same addr ==> A gets mem[addr_]; B gets mem[addr_]<br>
 
 if A writes and B reads:
-    Diff addr ==> mem[addrA] gets A and A gets A; B gets mem[addrB]
-    Same addr ==> mem[addrA] gets A and A gets A; B gets old mem[addrA]
+    Diff addr ==> mem[addrA] gets A and A gets A; B gets mem[addrB]<br> 
+    Same addr ==> mem[addrA] gets A and A gets A; B gets old mem[addrA]<br>
 
 if A reads and B writes:
-    Diff addr ==> A gets mem[addrA]; mem[addrB] gets B and B gets B
-    Same addr ==> mem[addrA] gets B and A gets B; B gets B
+    Diff addr ==> A gets mem[addrA]; mem[addrB] gets B and B gets B<br>
+    Same addr ==> mem[addrA] gets B and A gets B; B gets B<br>
 
 if A and B writes:
-    Diff addr ==> mem[addrA] gets A and A gets A; mem[addrB] gets B and B gets B
-    Same addr ==> mem[addrA] gets B and A gets B; B gets B
+    Diff addr ==> mem[addrA] gets A and A gets A; mem[addrB] gets B and B gets B<br>
+    Same addr ==> mem[addrA] gets B and A gets B; B gets B<br>
 
