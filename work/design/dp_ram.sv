@@ -14,7 +14,7 @@ module dp_ram #(parameter DATA_WIDTH = 8, parameter ADDR_WIDTH = 4)(
   output logic [DATA_WIDTH-1:0] dataB_out
 );
 
-logic [DATA_WIDTH-1:0] mem [0:2**ADDR_WIDTH-1];
+logic [DATA_WIDTH-1:0] mem [0:1<<ADDR_WIDTH-1];
 
 
 always_ff @(posedge clk) begin
@@ -22,20 +22,28 @@ always_ff @(posedge clk) begin
     dataA_out <= '0;
     dataB_out <= '0;
   end else begin
-      if (wrA && wrB && (addrA == addrB)) begin
-        mem[addrA] <= dataA_in;
+      if (wrB) begin// B mem write
         mem[addrB] <= dataB_in;
-        dataA_out  <= 'x;
-        dataB_out  <= 'x;
-      end else begin
-        if (wrA)
-          mem[addrA] <= dataA_in;
-        dataA_out  <= wrA ? dataA_in : mem[addrA];
-        if (wrB)
-          mem[addrB] <= dataB_in;
-        dataB_out  <= wrB ? dataB_in : mem[addrB];
       end
-    end
+      if (wrA && !(wrB && (addrA == addrB))) begin // A mem write unless B also writes at the same addr
+        mem[addrA] <= dataA_in;
+      end
+      
+      // A output
+      // if B writes same address that A reads, A should see B's new data
+      if (wrA) begin // A write: unless B overwrote same addr, A sees its write
+        dataA_out <= (wrB && (addrA == addrB)) ? dataB_in : dataA_in;
+      end else begin// A read: if B wrote same address this cycle, show B's data
+        dataA_out <= (wrB && (addrA == addrB)) ? dataB_in : mem[addrA];
+      end
+
+      // B output
+      if (wrB) begin
+        dataB_out <= dataB_in;
+      end else begin 
+        dataB_out <= mem[addrB];
+      end
   end
+end
 
 endmodule
