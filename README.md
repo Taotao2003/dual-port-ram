@@ -12,7 +12,7 @@ This is a WRITE THROUGH design with PORT B PRECEDENCE
 
 # Design
 
-Different Scenarios
+## Different Scenarios
 
 if A and B reads:
     Diff addr ==> A gets mem[addrA]; B gets mem[addrB]
