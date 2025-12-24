@@ -1,9 +1,9 @@
 class ram_env extends uvm_env;
   `uvm_component_utils(ram_env)
 
-  ram_agent agentA, agentB;
+  ram_agent agent;
   ram_sb sb;
-  ram_cov cov;
+  // ram_cov cov;
 
   
   function new(input string name="ram_env",input uvm_component parent = null);
@@ -13,17 +13,15 @@ class ram_env extends uvm_env;
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     
-    agentA = ram_agent::type_id::create("agentA", this);
-    agentB = ram_agent::type_id::create("agentB", this);
+    agent = ram_agent::type_id::create("agent_a", this);
+    // agent_b = ram_agent::type_id::create("agent_b", this);
     sb = ram_sb::type_id::create("sb", this);
-    cov = ram_cov::type_id::create("cov", this);
+    // cov = ram_cov::type_id::create("cov", this);
   endfunction
   
   function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    agentA.mntr.ap.connect(sb.imp);
-    agentB.mntr.ap.connect(sb.imp);
-    agentA.mntr.ap.connect(cov.imp);
-    agentB.mntr.ap.connect(cov.imp);
+    agent.mntr.ap.connect(sb.imp);
+    // agent.mntr.ap.connect(cov.imp);
   endfunction 
 endclass
