@@ -79,6 +79,7 @@ class ram_sb extends uvm_scoreboard;
 			end else num_passed++;
 		end
 
+		// scoreboard reference is modeling what the DUT SHOULD have done, not what it appears to have done
 		// update reference memory on writes
 		if (txn.wr_b) begin
 			ref_mem[txn.addr_b] = txn.data_b_in;

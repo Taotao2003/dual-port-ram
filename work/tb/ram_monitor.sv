@@ -23,10 +23,11 @@ class ram_monitor extends uvm_monitor;
 		
     
     forever begin
-      @(posedge vif.clk);
+      @(negedge vif.clk); // also fixes the issue where the monitor is sampling too early 
+      // @(posedge vif.clk);
       if (vif.rst) continue;
 
-      #1step;
+      // #1step; // fixes the issue where the monitor is sampling before the DUT updates outputs. short words, it reads too early
 			// create transaction for each cycle
 			txn = ram_txn::type_id::create($sformatf("ram_txn_%0d", cycle), this);
 

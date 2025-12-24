@@ -37,8 +37,8 @@ class ram_simple_seq extends ram_base_seq;
 
   virtual task body();
     ram_txn req;
-    `uvm_info(get_type_name(),"Executing sequence with 10 transactions", UVM_LOW)
-    repeat(10) begin
+    `uvm_info(get_type_name(),"Executing sequence with 1000 transactions", UVM_LOW)
+    repeat(1000) begin
       req = ram_txn::type_id::create("req");
       start_item(req);
       assert(req.randomize());
