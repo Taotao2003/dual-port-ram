@@ -28,12 +28,7 @@ class ram_txn extends uvm_sequence_item;
 
   constraint writes_dist {
     // make writes happen 60% of the time
-    wr_a dist {1:=60, 0:=40};
-    wr_b dist {1:=60, 0:=40};
-  }
-
-  constraint force_collision {
-    if (wr_a && wr_b) addr_a == addr_b;
-
+    wr_a dist {1:=80, 0:=20};
+    wr_b dist {1:=80, 0:=20};
   }
 endclass

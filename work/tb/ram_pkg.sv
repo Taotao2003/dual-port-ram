@@ -18,5 +18,6 @@ package ram_pkg;
 	// tests
 	`include "../test/ram_base_test.sv"
 	`include "../test/ram_simple_test.sv"
+	`include "../test/ram_write_test.sv"
     
 endpackage

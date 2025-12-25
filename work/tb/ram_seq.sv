@@ -37,8 +37,8 @@ class ram_simple_seq extends ram_base_seq;
 
   virtual task body();
     ram_txn req;
-    `uvm_info(get_type_name(),"Executing sequence with 1000 transactions", UVM_LOW)
-    repeat(1000) begin
+    `uvm_info(get_type_name(),"Executing sequence with 10000 transactions", UVM_LOW)
+    repeat(10000) begin
       req = ram_txn::type_id::create("req");
       start_item(req);
       assert(req.randomize());
@@ -48,24 +48,26 @@ class ram_simple_seq extends ram_base_seq;
 endclass 
 
 
-// class ram_write_seq extends ram_base_seq;
+class ram_write_seq extends ram_base_seq;
 
-//   `uvm_object_utils(ram_write_seq)
+  `uvm_object_utils(ram_write_seq)
 
-//   function new ( string name = "ram_write_seq");
-//     super.new(name);
-//   endfunction
+  function new ( string name = "ram_write_seq");
+    super.new(name);
+  endfunction
 
-//   virtual task body();
-//     ram_txn req;
-//     `uvm_info(get_type_name(),"Executing write sequence with 1000 transactions", UVM_LOW)
-//       req = ram_txn::type_id::create("req");
-//       start_item(req);
-//       assert(req.randomize() with {
-//         wr_a == 1; wr_b == 1;} 
-//         (addr_a == addr_b) dist {1:=50, 0:=50};  
-//       ); 
-//       finish_item(req);
-//     end
-//   endtask
-// endclass
+  virtual task body();
+    ram_txn req;
+    `uvm_info(get_type_name(),"Executing write-only sequence with 1000 transactions", UVM_LOW)
+    repeat(1000) begin
+      req = ram_txn::type_id::create("req");
+      start_item(req);
+      assert(req.randomize() with {
+        wr_a == 1; 
+        wr_b == 1;
+        addr_a == addr_b;
+      }); 
+      finish_item(req);
+    end
+  endtask
+endclass
